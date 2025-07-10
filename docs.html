@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Chosen Palette: Warm Neutral (Slate, Amber, White) -->
+    <!-- Application Structure Plan: A two-column layout. A sticky left sidebar provides persistent navigation that smoothly scrolls to content sections in the main right column. This structure allows users to easily jump between topics and always understand their location within the documentation. Key interactions include copy-to-clipboard buttons for code blocks and a scrollspy to highlight the user's current section in the navigation, enhancing usability and making the content more accessible than a simple linear document. -->
+    <!-- Visualization & Content Choices:
+        - Goal: Inform/Guide (Setup Process): Presented as styled code blocks that mimic a terminal. Interaction: "Copy" button for each command. Justification: Familiarity for developers and ease of use. Method: HTML/CSS for styling, JS for copy functionality.
+        - Goal: Organize (Commands List): Presented as a structured list with clear separation between command and description. Interaction: Hover effects for clarity. Justification: Improves readability and quick scanning over a raw text block. Method: HTML/CSS.
+        - Goal: Navigate (Overall): Presented as a sticky sidebar. Interaction: Smooth scrolling and active section highlighting (scrollspy). Justification: Provides constant context and quick access to all sections. Method: JS for scrolling and scroll observation.
+        - New Content: AGENT.md, .mcp, and todo.md details are integrated into the "Advanced Usage & Customization" section to highlight advanced customization and planning features.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <title>Developer X - Documentation</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Manrope & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #1e293b; /* slate-800 */
+        }
+        .font-manrope { font-family: 'Manrope', sans-serif; }
+        .font-fira { font-family: 'Fira Code', monospace; }
+
+        /* Custom styles for a clean, professional look */
+        h1, h2, h3 {
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        /* Sidebar active link styling */
+        .sidebar-link.active {
+            color: #d97706; /* amber-600 */
+            border-left-color: #d97706; /* amber-600 */
+            font-weight: 600;
+        }
+
+        /* Custom Code Block Styling */
+        .code-block {
+            background-color: #020617; /* slate-950 */
+            color: #cbd5e1; /* slate-300 */
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            position: relative;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+            line-height: 1.7;
+            overflow-x: auto;
+        }
+        .code-block-header {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+        }
+        .code-copy-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #334155; /* slate-700 */
+            color: #e2e8f0; /* slate-200 */
+            border: 0;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .code-copy-button:hover {
+            background-color: #475569; /* slate-600 */
+        }
+        .code-block .user-prompt {
+            color: #67e8f9; /* cyan-300 */
+        }
+        .code-block .system-info {
+            color: #a5b4fc; /* indigo-300 */
+        }
+        .code-block .highlight {
+            color: #fcd34d; /* amber-300 */
+        }
+        .code-block .success {
+            color: #4ade80; /* green-400 */
+        }
+
+        /* Command list styling */
+        .command-list-item {
+            border-bottom: 1px solid #e2e8f0; /* slate-200 */
+            padding: 1rem 0;
+        }
+        .command-list-item:last-child {
+            border-bottom: none;
+        }
+        .command-name {
+            color: #4f46e5; /* indigo-600 */
+            font-weight: 600;
+            font-family: 'Fira Code', monospace;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto">
+        <div class="flex flex-col lg:flex-row">
+
+            <!-- Left Sidebar -->
+            <aside class="w-full lg:w-1/4 lg:h-screen lg:sticky lg:top-0 p-8 border-b lg:border-b-0 lg:border-r border-slate-200">
+                <div class="flex items-center space-x-3 mb-10">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-amber-600">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32ZM13.8693 22.1307L22.1307 13.8693L20.2621 12L12 20.2621L13.8693 22.1307ZM9.86928 18.1307L18.1307 9.86928L16.2621 8L8 16.2621L9.86928 18.1307Z" fill="currentColor"/>
+                    </svg>
+                    <span class="text-2xl font-bold font-manrope text-slate-900">Developer X</span>
+                </div>
+                <nav id="sidebar-nav">
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#getting-started" class="sidebar-link block text-slate-500 hover:text-slate-800 transition-colors duration-200 border-l-2 border-transparent pl-4 py-1.5">Getting Started</a>
+                        </li>
+                        <li>
+                            <a href="#installation" class="sidebar-link block text-slate-500 hover:text-slate-800 transition-colors duration-200 border-l-2 border-transparent pl-4 py-1.5">1. Installation & Setup</a>
+                        </li>
+                        <li>
+                            <a href="#provider-selection" class="sidebar-link block text-slate-500 hover:text-slate-800 transition-colors duration-200 border-l-2 border-transparent pl-4 py-1.5">2. Provider Selection</a>
+                        </li>
+                        <li>
+                            <a href="#model-id" class="sidebar-link block text-slate-500 hover:text-slate-800 transition-colors duration-200 border-l-2 border-transparent pl-4 py-1.5">3. Model ID Specification</a>
+                        </li>
+                        <li>
+                            <a href="#confirmation" class="sidebar-link block text-slate-500 hover:text-slate-800 transition-colors duration-200 border-l-2 border-transparent pl-4 py-1.5">4. Configuration Confirmation</a>
+                        </li>
+                        <li>
+                            <a href="#interaction" class="sidebar-link block text-slate-500 hover:text-slate-800 transition-colors duration-200 border-l-2 border-transparent pl-4 py-1.5">5. Interaction</a>
+                        </li>
+                        <li>
+                            <a href="#commands" class="sidebar-link block text-slate-500 hover:text-slate-800 transition-colors duration-200 border-l-2 border-transparent pl-4 py-1.5">Commands List</a>
+                        </li>
+                        <li>
+                            <a href="#capabilities" class="sidebar-link block text-slate-500 hover:text-slate-800 transition-colors duration-200 border-l-2 border-transparent pl-4 py-1.5">Core Capabilities</a>
+                        </li>
+                        <li>
+                            <a href="#advanced-usage" class="sidebar-link block text-slate-500 hover:text-slate-800 transition-colors duration-200 border-l-2 border-transparent pl-4 py-1.5">Advanced Usage</a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- Right Content Area -->
+            <main class="w-full lg:w-3/4 p-8 lg:p-16">
+                <article class="prose max-w-none prose-slate">
+                    <section id="getting-started" class="mb-16 scroll-mt-24">
+                        <h1 class="text-5xl text-slate-900">Getting Started Guide</h1>
+                        <p class="text-lg text-slate-600 mt-4 leading-8">This guide provides comprehensive instructions for installing, configuring, and utilizing Developer X, your autonomous AI coding partner, within your enterprise environment. Follow these steps to integrate Developer X into your development workflow and unlock its full potential.</p>
+                    </section>
+
+                    <section id="installation" class="mb-16 scroll-mt-24">
+                        <h2 class="text-3xl text-slate-900">1. Installation and Initial Setup</h2>
+                        <p class="text-slate-600 mt-4 leading-8">Developer X is distributed as a standalone command-line interface (CLI) executable. Ensure you have the necessary system permissions to run executable files. Navigate to your desired project directory in your terminal and execute the Developer X application.</p>
+                        <div class="code-block mt-6">
+                            <div class="code-block-header">
+                                <button class="code-copy-button" data-copy-text="path/to/DeveloperX.exe">
+                                    <i data-lucide="copy" class="h-4 w-4"></i><span>Copy</span>
+                                </button>
+                            </div>
+                            <pre><code>C:/Myproject> path/to/DeveloperX.exe</code></pre>
+                        </div>
+                        <p class="text-slate-600 mt-6 leading-8">Upon successful execution, Developer X will initialize and display a welcome message, indicating the current working directory it has detected. This directory will be the primary context for all file operations and command executions by the AI agent.</p>
+                        <div class="code-block mt-4">
+                            <pre><code>🚀 Welcome to AI Coding Agent!
+========================================
+<span class="system-info">📍 Current working directory: F:\MINECRAFT</span>
+========================================
+<span class="highlight">🔑 Enter your API key (or press Enter for placeholder):</span></code></pre>
+                        </div>
+                        <h3 class="text-2xl text-slate-900 mt-8">API Key Configuration</h3>
+                        <p class="text-slate-600 mt-4 leading-8">Developer X requires an API key to authenticate with external Large Language Model (LLM) providers. You have two primary options for this step:</p>
+                        <ul class="list-disc pl-5 mt-4 space-y-2 text-slate-600">
+                            <li><strong class="font-semibold text-slate-700">Enter your API Key:</strong> For production-grade usage and access to advanced models, provide your API key obtained directly from your chosen LLM provider (e.g., OpenAI, Anthropic, Google Cloud). This ensures secure and authenticated communication.</li>
+                            <li><strong class="font-semibold text-slate-700">Press Enter for Placeholder:</strong> If you intend to utilize local LLMs such as Ollama or LM Studio, you can simply press Enter without providing a key. This mode is ideal for local development, testing, or environments with strict data residency requirements, as your code and data remain entirely within your local infrastructure.</li>
+                        </ul>
+                        <p class="text-slate-600 mt-4 leading-8">Developer X automatically saves your configuration to a local file (e.g., `.devx_config`) for persistence across sessions, so you typically only need to perform this setup once per environment.</p>
+                    </section>
+
+                    <section id="provider-selection" class="mb-16 scroll-mt-24">
+                        <h2 class="text-3xl text-slate-900">2. Provider Selection</h2>
+                        <p class="text-slate-600 mt-4 leading-8">After configuring your API key, you will be prompted to select the Large Language Model (LLM) provider that Developer X will use for its intelligence. This choice is crucial as it dictates the range of models available, their performance characteristics, and associated costs.</p>
+                        <div class="code-block mt-6">
+                            <pre><code>🌐 Available providers:
+    1. openai (GPT-4.1)
+    2. claude (Claude-4 sonnet)
+    3. gemini (Gemini-2.5-flash)
+    4. ollama (Local)
+    5. lm_studio (Local)
+    6. openrouter (Multiple models)
+
+<span class="highlight">Choose provider (1-6 or name):</span></code></pre>
+                        </div>
+                        <p class="text-slate-600 mt-6 leading-8">Select a provider by entering its corresponding number (1-6) or its exact name (e.g., "openai", "gemini"). Each provider offers different advantages:</p>
+                        <ul class="list-disc pl-5 mt-4 space-y-2 text-slate-600">
+                            <li><strong class="font-semibold text-slate-700">OpenAI:</strong> Access to cutting-edge models like GPT-4, known for strong reasoning and code generation.</li>
+                            <li><strong class="font-semibold text-slate-700">Anthropic (Claude):</strong> Offers models like Claude Sonnet and Opus, often praised for their long context windows and safety features.</li>
+                            <li><strong class="font-semibold text-slate-700">Google Gemini:</strong> Provides access to Google's powerful Gemini models, optimized for multimodal reasoning and efficiency.</li>
+                            <li><strong class="font-semibold text-slate-700">Ollama / LM Studio (Local):</strong> Ideal for privacy-sensitive operations or disconnected environments, allowing you to run open-source models directly on your hardware.</li>
+                            <li><strong class="font-semibold text-slate-700">OpenRouter:</strong> A unified API for various models from different providers, offering flexibility and cost optimization.</li>
+                        </ul>
+                    </section>
+                    
+                    <section id="model-id" class="mb-16 scroll-mt-24">
+                        <h2 class="text-3xl text-slate-900">3. Model ID Specification</h2>
+                        <p class="text-slate-600 mt-4 leading-8">Once a provider is selected, Developer X will prompt you to specify the exact model ID. This allows you to fine-tune the agent's behavior and capabilities based on the specific LLM model used.</p>
+                        <div class="code-block mt-6">
+                            <pre><code><span class="highlight">📋 Enter model ID:</span></code></pre>
+                        </div>
+                        <p class="text-slate-600 mt-6 leading-8">Examples of model IDs you might enter, depending on your chosen provider:</p>
+                        <ul class="list-disc pl-5 mt-4 space-y-2 text-slate-600">
+                            <li><strong class="font-semibold text-slate-700">OpenAI:</strong> <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">gpt-4o</code>, <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">gpt-4-turbo</code>, <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">gpt-3.5-turbo</code></li>
+                            <li><strong class="font-semibold text-slate-700">Anthropic:</strong> <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">claude-3-opus-20240229</code>, <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">claude-3-sonnet-20240229</code></li>
+                            <li><strong class="font-semibold text-slate-700">Google Gemini:</strong> <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">gemini-pro</code>, <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">gemini-1.5-flash</code></li>
+                            <li><strong class="font-semibold text-slate-700">OpenRouter:</strong> Model IDs vary widely; refer to OpenRouter's documentation for specific available models (e.g., <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">google/gemini-pro</code>, <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">mistralai/mistral-7b-instruct</code>)</li>
+                        </ul>
+                        <p class="text-slate-600 mt-4 leading-8">If the entered model ID is not recognized or you leave it blank, Developer X will intelligently fall back to a robust default model, <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">claude-3-5-sonnet-20240620</code>, to ensure continuous operation without interruption.</p>
+                    </section>
+
+                    <section id="confirmation" class="mb-16 scroll-mt-24">
+                        <h2 class="text-3xl text-slate-900">4. Configuration Confirmation</h2>
+                        <p class="text-slate-600 mt-4 leading-8">Upon successful completion of the setup process, Developer X will display a confirmation summary of your chosen configuration. This summary provides an overview of the active settings for the current session.</p>
+                        <div class="code-block mt-6">
+                            <pre><code><span class="success">✅ Configuration:</span>
+    Working Directory: C:/Myproject
+    Provider: openrouter
+    Model: claude-3-5-sonnet-20240620
+    API Key: **************************************************
+
+💡 Tip: Use @filename to include file contents in your messages!
+<span class="user-prompt">🔷 You:</span></code></pre>
+                        </div>
+                        <p class="text-slate-600 mt-6 leading-8">The `Working Directory` indicates the root path for all file system operations. The `Provider` and `Model` fields confirm your selected LLM integration. For security purposes, your `API Key` will be masked. This configuration is saved locally, allowing you to resume your work without re-entering details in subsequent sessions. To reconfigure settings at any time, simply type <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">config</code> at the prompt.</p>
+                    </section>
+
+                    <section id="interaction" class="mb-16 scroll-mt-24">
+                        <h2 class="text-3xl text-slate-900">5. Interacting with Developer X</h2>
+                        <p class="text-slate-600 mt-4 leading-8">With Developer X successfully configured, you are ready to begin interacting with your autonomous AI coding partner. The <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">🔷 You:</code> prompt signifies that the agent is awaiting your natural language instructions or commands. Simply type your request, and Developer X will initiate its intelligent workflow to accomplish your task.</p>
+                        <p class="text-slate-600 mt-4 leading-8">Examples of natural language requests:</p>
+                        <ul class="list-disc pl-5 mt-4 space-y-2 text-slate-600">
+                            <li>"Refactor the user authentication module to use JWT."</li>
+                            <li>"Add comprehensive unit tests for the new payment gateway integration."</li>
+                            <li>"Fix the persistent caching bug affecting the main dashboard's performance."</li>
+                            <li>"Create a new REST API endpoint for managing user profiles, including CRUD operations."</li>
+                            <li>"Develop a simple React component for a draggable card."</li>
+                        </ul>
+                    </section>
+                    
+                    <section id="commands" class="mb-16 scroll-mt-24">
+                        <h3 class="text-3xl text-slate-900">Commands List</h3>
+                        <p class="text-slate-600 mt-4 leading-8">Developer X supports a range of direct commands to control its behavior and provide specific context. To view this comprehensive list at any time, type <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">help</code> at the prompt:</p>
+                         <div class="mt-6 border border-slate-200 rounded-lg">
+                            <div class="command-list-item px-6">
+                                <p class="command-name">Natural Language Request</p>
+                                <p class="text-slate-600 mt-1">Type any question, task, or instruction for the agent to process and execute. Developer X will interpret your request and formulate a plan.</p>
+                            </div>
+                            <div class="command-list-item px-6">
+                                <p class="command-name">@path/to/file</p>
+                                <p class="text-slate-600 mt-1">Include the contents of a specific file in your message. This provides the agent with immediate context, ensuring it understands the relevant code or documentation for your task.</p>
+                            </div>
+                            <div class="command-list-item px-6">
+                                <p class="command-name">``` or """</p>
+                                <p class="text-slate-600 mt-1">Use three backticks (<code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">```</code>) or three double-quotes (<code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">"""</code>) at the end of your line to initiate a multiline input. This is essential for providing longer code snippets, detailed specifications, or extensive prompts to the agent.</p>
+                            </div>
+                            <div class="command-list-item px-6">
+                                <p class="command-name">exit</p>
+                                <p class="text-slate-600 mt-1">Gracefully quit the Developer X application and terminate all active agent processes.</p>
+                            </div>
+                             <div class="command-list-item px-6">
+                                <p class="command-name">clear</p>
+                                <p class="text-slate-600 mt-1">Clear the current conversation history in the terminal. This does not affect saved configurations or project files.</p>
+                            </div>
+                             <div class="command-list-item px-6">
+                                <p class="command-name">config</p>
+                                <p class="text-slate-600 mt-1">Re-run the initial setup process, allowing you to change your API key, switch LLM providers, or select a different model without restarting the application.</p>
+                            </div>
+                             <div class="command-list-item px-6">
+                                <p class="command-name">tools</p>
+                                <p class="text-slate-600 mt-1">Display a list of all internal and custom tools currently available to the AI agent for task execution.</p>
+                            </div>
+                             <div class="command-list-item px-6">
+                                <p class="command-name">pwd</p>
+                                <p class="text-slate-600 mt-1">Print the current working directory that Developer X is operating within.</p>
+                            </div>
+                            <div class="command-list-item px-6">
+                                <p class="command-name">multiline</p>
+                                <p class="text-slate-600 mt-1">A utility command to test the multiline input feature, useful for verifying correct input parsing.</p>
+                            </div>
+                            <div class="command-list-item px-6">
+                                <p class="command-name">mcp</p>
+                                <p class="text-slate-600 mt-1">Check the current status and configuration of the Model Context Protocol (MCP) server, which manages custom tool integrations.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="capabilities" class="mb-16 scroll-mt-24">
+                        <h2 class="text-3xl text-slate-900">Core Capabilities</h2>
+                        <p class="text-slate-600 mt-4 leading-8">Developer X is engineered as an autonomous and highly capable AI coding partner, designed to streamline complex development workflows. It intelligently performs a wide range of actions based on your natural language queries, going beyond simple code generation.</p>
+                        <ul class="list-disc pl-5 mt-4 space-y-4 text-slate-600">
+                             <li><strong class="font-semibold text-slate-700">Web Browsing:</strong> The agent can autonomously browse the web to gather information, perform research, understand external APIs, or find solutions to problems, integrating real-time data into its decision-making process.</li>
+                             <li><strong class="font-semibold text-slate-700">File Operations:</strong> Developer X has full read, write, and edit capabilities within your designated project directory. It can create new files, modify existing code, read documentation, and manage project structures as needed to complete tasks.</li>
+                             <li><strong class="font-semibold text-slate-700">Command Execution:</strong> The agent can execute terminal commands directly in its environment. This enables it to run tests, install dependencies, compile code, start development servers, or perform any other command-line operation required for the task.</li>
+                             <li><strong class="font-semibold text-slate-700">Multi-Agent Orchestration:</strong> For complex projects, Developer X can intelligently spawn and manage multiple specialized AI agents. These agents can work in parallel or sequentially, collaborating on different aspects of a task to accelerate development and improve efficiency.</li>
+                        </ul>
+                    </section>
+
+                    <section id="advanced-usage" class="scroll-mt-24">
+                        <h2 class="text-3xl text-slate-900">Advanced Usage & Customization</h2>
+                        <p class="text-slate-600 mt-4 leading-8">Developer X offers powerful customization options to tailor the AI agent's behavior, integrate custom tools, and maintain transparency in its workflow.</p>
+
+                        <h3 class="text-2xl text-slate-900 mt-8">Customizable Agent Behavior with <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">AGENT.md</code></h3>
+                        <p class="text-slate-600 mt-4 leading-8">You can fine-tune the AI agent's persona, constraints, and preferred tools by creating an <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">AGENT.md</code> file in your project's root directory. This Markdown file serves as a dynamic configuration for the agent's behavior, allowing you to define:</p>
+                        <ul class="list-disc pl-5 mt-4 space-y-2 text-slate-600">
+                            <li><strong class="font-semibold text-slate-700">Persona:</strong> Guide the agent to act as a specific type of developer (e.g., "a meticulous backend engineer," "a creative frontend designer").</li>
+                            <li><strong class="font-semibold text-slate-700">Constraints:</strong> Set boundaries for its operations (e.g., "only modify files in the `src` directory," "do not use external APIs").</li>
+                            <li><strong class="font-semibold text-slate-700">Preferred Tools:</strong> Instruct the agent to prioritize certain tools or methodologies for specific tasks.</li>
+                            <li><strong class="font-semibold text-slate-700">Contextual Information:</strong> Provide additional project-specific guidelines or architectural patterns.</li>
+                        </ul>
+                        <p class="text-slate-600 mt-4 leading-8">The agent reads this file at the start of each session or when its behavior needs to be adapted, ensuring its actions align with your team's specific workflow and coding standards.</p>
+
+                        <h3 class="text-2xl text-slate-900 mt-8">Integrating Custom Tools with <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">.mcp</code> Files</h3>
+                        <p class="text-slate-600 mt-4 leading-8">Developer X supports the Model Context Protocol (MCP), allowing you to extend its capabilities by integrating custom tools or services. Define your MCP servers in a <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">.mcp</code> file, typically located in your project root. This file uses JSON format to specify the endpoints and functionalities of your custom tools.</p>
+                        <p class="text-slate-600 mt-4 leading-8">Example <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">.mcp</code> file structure:</p>
+                        <div class="code-block mt-6">
+                            <pre><code>{
+  "mcp_servers": [
+    {
+      "name": "CustomBuildTool",
+      "endpoint": "http://localhost:8080/build",
+      "description": "A custom tool for triggering specific build pipelines."
+    },
+    {
+      "name": "InternalAPITester",
+      "endpoint": "https://internal.api.com/test",
+      "description": "Tool to run integration tests against internal APIs."
+    }
+  ]
+}</code></pre>
+                        </div>
+                        <p class="text-slate-600 mt-4 leading-8">By defining these servers, Developer X can autonomously interact with your internal systems, automating tasks that are unique to your development environment.</p>
+
+                        <h3 class="text-2xl text-slate-900 mt-8">Intelligent Planning and Progress Tracking with <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">todo.md</code></h3>
+                        <p class="text-slate-600 mt-4 leading-8">To provide transparency and facilitate collaboration, Developer X automatically generates and updates a <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">todo.md</code> file in your project's root. This file serves as a dynamic plan and progress tracker, outlining the steps the agent intends to take to complete your request.</p>
+                        <p class="text-slate-600 mt-4 leading-8">The <code class="bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded font-fira">todo.md</code> file will dynamically update as the agent progresses through its tasks, providing real-time insights into its current actions, completed steps, and remaining work. This feature is invaluable for monitoring complex operations and understanding the agent's decision-making process.</p>
+                    </section>
+                </article>
+            </main>
+
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            // --- Copy to Clipboard for Code Blocks ---
+            document.querySelectorAll('.code-copy-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const textToCopy = button.dataset.copyText;
+                    if (textToCopy) {
+                        navigator.clipboard.writeText(textToCopy).then(() => {
+                            const buttonText = button.querySelector('span');
+                            buttonText.textContent = 'Copied!';
+                            setTimeout(() => {
+                                buttonText.textContent = 'Copy';
+                            }, 2000);
+                        }).catch(err => {
+                            console.error('Failed to copy text: ', err);
+                        });
+                    }
+                });
+            });
+
+            // --- Scrollspy for Sidebar Navigation ---
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('#sidebar-nav a');
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { rootMargin: '-20% 0px -70% 0px', threshold: 0.1 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Activate the first link by default
+            if(navLinks.length > 0) {
+              const firstVisibleSection = Array.from(sections).find(s => s.getBoundingClientRect().top >= 0);
+              if (!firstVisibleSection) {
+                  navLinks[0].classList.add('active');
+              }
+            }
+        });
+    </script>
+</body>
+</html>
