@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer X - Your Enterprise AI Coding Partner</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Manrope & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom CSS Properties for Animations */
+        @property --spotlight-x {
+          syntax: '<length>';
+          initial-value: 0px;
+          inherits: false;
+        }
+        @property --spotlight-y {
+          syntax: '<length>';
+          initial-value: 0px;
+          inherits: false;
+        }
+        @property --border-angle {
+          syntax: '<angle>';
+          initial-value: 0deg;
+          inherits: false;
+        }
+
+        /* Base Body Styling */
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #0A0A0A;
+            color: #EAEAEA;
+            overflow-x: hidden; /* Prevent horizontal scroll from elements like particle canvas */
+        }
+        /* Font utility classes */
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-fira { font-family: 'Fira Code', monospace; }
+
+        /* Glassmorphism Effect for Header */
+        .glassmorphism {
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Aurora Background Effect for Hero Section */
+        .aurora-background {
+            position: relative;
+            background-color: #0A0A0A;
+            overflow: hidden;
+        }
+        .aurora-background::before, .aurora-background::after {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.15;
+            z-index: 0; /* Ensures it's behind hero content */
+            animation: aurora-flow 25s infinite linear;
+        }
+        .aurora-background::before { background: #ff8a00; top: -200px; left: -200px; }
+        .aurora-background::after { background: #6a00ff; bottom: -200px; right: -200px; animation-delay: -12.5s; }
+        
+        @keyframes aurora-flow {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(150px, 80px) rotate(180deg); }
+        }
+        
+        /* Premium Button Styling with Hover Effects */
+        .premium-button {
+            position: relative; /* Ensure z-index works */
+            overflow: hidden;
+            transition: all 0.3s ease;
+            z-index: 10; /* Bring button to front */
+            pointer-events: auto; /* Ensure it's clickable */
+        }
+        .premium-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.4);
+        }
+        /* Enhanced CTA Button Glow Effect */
+        .premium-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(249, 115, 22, 0.6) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+            z-index: -1;
+            border-radius: inherit;
+            transform: scale(0.8);
+        }
+        .premium-button:hover::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Scroll Reveal Animation */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Logo Marquee Animation */
+        .logo-marquee {
+            overflow: hidden;
+            position: relative;
+            /* Mask to fade out logos at edges */
+            -webkit-mask-image: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+            mask-image: linear-gradient(to right, transparent, white 20%, white 80%, transparent);
+        }
+        .logo-track {
+            display: flex;
+            width: max-content; /* Allows all logos to be on one line */
+            animation: marquee 40s linear infinite;
+        }
+        .logo-track > * { flex-shrink: 0; margin: 0 2.5rem; } /* Prevent logos from shrinking */
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); } /* Move to halfway point to create loop */
+        }
+
+        /* Enhanced Feature Card Hover Effects */
+        .feature-card {
+            background: #171717;
+            border: 1px solid #262626;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d; /* For 3D rotation effect */
+        }
+        .feature-card:hover {
+            transform: perspective(1000px) rotateX(var(--rotate-x, 0)) rotateY(var(--rotate-y, 0)) translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2), 0 8px 10px -6px rgb(0 0 0 / 0.2);
+        }
+        .feature-card::before, .feature-card::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        /* Spotlight Effect on Hover */
+        .feature-card::before {
+            background: radial-gradient(
+                250px circle at var(--spotlight-x) var(--spotlight-y),
+                rgba(255, 255, 255, 0.08),
+                transparent 80%
+            );
+        }
+        /* Animated Border Effect on Hover */
+        .feature-card::after {
+            --border-size: 2px;
+            border: var(--border-size) solid transparent;
+            background: conic-gradient(from var(--border-angle), #171717, #ff8a00, #6a00ff, #ff8a00, #171717) border-box;
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor; /* Exclude content-box from mask */
+            mask-composite: exclude;
+            animation: border-spin 4s linear infinite;
+        }
+        .feature-card:hover::before, .feature-card:hover::after {
+            opacity: 1;
+        }
+        @keyframes border-spin {
+            to { --border-angle: 360deg; }
+        }
+
+        /* Animated Terminal Styling */
+        .terminal {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .terminal-header {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .terminal-body { min-height: 120px; } /* Ensure minimum height for content */
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.2em;
+            background: #f97316;
+            animation: blink 1s steps(1) infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        
+        /* How it works terminal styling */
+        .workflow-terminal {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            height: 350px; /* Fixed height for consistent layout */
+            overflow-y: auto; /* Enable scrolling for long content */
+        }
+        .workflow-terminal p {
+            margin: 0;
+            line-height: 1.5;
+            white-space: pre-wrap; /* Preserve whitespace and line breaks */
+            word-break: break-all; /* Break long words */
+        }
+        .workflow-terminal .line {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        /* Particle Canvas Styling */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Behind all content */
+            pointer-events: none; /* Allow clicks to pass through */
+        }
+
+        /* Hero Blob Styling */
+        .hero-blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle at center, rgba(255, 138, 0, 0.4) 0%, rgba(106, 0, 255, 0.4) 50%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.6;
+            transition: transform 0.1s ease-out; /* Smooth follow effect */
+            z-index: 0; /* Below content, above aurora-background */
+            transform: translate(-50%, -50%); /* Center the blob initially */
+        }
+
+        /* Modal Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it's on top of everything */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #171717;
+            border: 1px solid #262626;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .modal-overlay.open .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #EAEAEA;
+            cursor: pointer;
+            font-size: 1.5rem;
+            line-height: 1;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.2s ease;
+        }
+        .modal-close-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <!-- Particle Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Header -->
+    <header class="glassmorphism sticky top-0 z-40">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <!-- Developer X Logo SVG -->
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-orange-600">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32ZM13.8693 22.1307L22.1307 13.8693L20.2621 12L12 20.2621L13.8693 22.1307ZM9.86928 18.1307L18.1307 9.86928L16.2621 8L8 16.2621L9.86928 18.1307Z" fill="currentColor"/>
+                </svg>
+                <span class="text-2xl font-bold text-white">Developer X</span>
+            </div>
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-1">
+                <a href="#features" class="text-gray-300 hover:text-orange-400 transition-all duration-200 px-4 py-2 rounded-md hover:bg-white/10">Features</a>
+                <a href="#how-it-works" class="text-gray-300 hover:text-orange-400 transition-all duration-200 px-4 py-2 rounded-md hover:bg-white/10">How It Works</a>
+                <a href="#pricing" class="text-gray-300 hover:text-orange-400 transition-all duration-200 px-4 py-2 rounded-md hover:bg-white/10">Pricing</a>
+                <a href="#testimonials" class="text-gray-300 hover:text-orange-400 transition-all duration-200 px-4 py-2 rounded-md hover:bg-white/10">Testimonials</a>
+                <a href="#faq" class="text-gray-300 hover:text-orange-400 transition-all duration-200 px-4 py-2 rounded-md hover:bg-white/10">FAQ</a>
+            </nav>
+            <!-- Desktop Auth/CTA Buttons -->
+            <div class="hidden md:flex items-center space-x-4">
+                <!-- Removed the "Login" button -->
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md hover:bg-white/10">
+                <i data-lucide="menu" class="h-6 w-6"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <nav class="flex flex-col space-y-4">
+                <a href="#features" class="text-gray-300 hover:text-orange-400 transition-colors block">Features</a>
+                <a href="#how-it-works" class="text-gray-300 hover:text-orange-400 transition-colors block">How It Works</a>
+                <a href="#pricing" class="text-gray-300 hover:text-orange-400 transition-colors block">Pricing</a>
+                <a href="#testimonials" class="text-gray-300 hover:text-orange-400 transition-colors block">Testimonials</a>
+                <a href="#faq" class="text-gray-300 hover:text-orange-400 transition-colors block">FAQ</a>
+                <hr class="border-gray-700"/>
+                <!-- Removed the "Login" button from mobile menu -->
+                <a href="#pricing" class="bg-orange-600 text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-orange-700 transition-all shadow-sm text-center">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero-section" class="aurora-background pt-32 pb-28 relative">
+            <!-- Hero Blob for mouse interaction -->
+            <div class="hero-blob" style="left: 50%; top: 50%;"></div>
+
+            <div class="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left">
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight tracking-tight scroll-reveal">
+                        Your Code's New <span class="text-orange-400">Collaborator</span>.
+                    </h1>
+                    <p class="mt-6 max-w-xl mx-auto lg:mx-0 text-lg md:text-xl text-gray-400 font-inter scroll-reveal" style="transition-delay: 150ms;">
+                        Build real-world software with <span class="text-purple-400">AI</span>, faster.
+                    </p>
+                    <div class="mt-12 flex justify-center lg:justify-start items-center flex-wrap gap-4 scroll-reveal" style="transition-delay: 300ms;">
+                        <a href="#pricing" class="bg-orange-600 text-white font-bold px-8 py-4 rounded-lg premium-button text-lg flex items-center space-x-2 shadow-lg shadow-orange-600/30">
+                            <span>See pricing</span>
+                            <i data-lucide="arrow-right" class="h-5 w-5"></i>
+                        </a>
+                        <a href="#contact" class="border-2 border-gray-700 text-gray-300 font-bold px-8 py-4 rounded-lg premium-button bg-gray-800/50 hover:bg-gray-800 hover:border-gray-600 flex items-center space-x-2">
+                            <span>Request a Demo</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="scroll-reveal" style="transition-delay: 200ms;">
+                    <!-- Animated Terminal in Hero Section -->
+                    <div class="terminal font-fira">
+                        <div class="terminal-header">
+                            <div class="terminal-dot bg-red-500"></div>
+                            <div class="terminal-dot bg-yellow-500"></div>
+                            <div class="terminal-dot bg-green-500"></div>
+                        </div>
+                        <div class="terminal-body">
+                            <span class="text-green-400">~/my-project on main $</span>
+                            <span id="terminal-text" class="text-white"></span>
+                            <span class="terminal-cursor"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trusted by Section -->
+        <section class="py-16 bg-black/20">
+            <div class="container mx-auto px-6">
+                <p class="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider scroll-reveal">
+                    Trusted by developers at
+                </p>
+                <div class="mt-8 logo-marquee scroll-reveal">
+                    <div class="logo-track">
+                        <!-- Placeholder logos for marquee effect -->
+                        <img src="https://placehold.co/150x40/0a0a0a/6b7280?text=QuantumLeap" alt="QuantumLeap Logo" class="h-8 transition-all duration-300 opacity-50 hover:opacity-100">
+                        <img src="https://placehold.co/150x40/0a0a0a/6b7280?text=Stellar" alt="Stellar Logo" class="h-8 transition-all duration-300 opacity-50 hover:opacity-100">
+                        <img src="https://placehold.co/150x40/0a0a0a/6b7280?text=Apex" alt="Apex Logo" class="h-8 transition-all duration-300 opacity-50 hover:opacity-100">
+                        <img src="https://placehold.co/150x40/0a0a0a/6b7280?text=Fusion" alt="Fusion Logo" class="h-8 transition-all duration-300 opacity-50 hover:opacity-100">
+                        <img src="https://placehold.co/150x40/0a0a0a/6b7280?text=Momentum" alt="Momentum Logo" class="h-8 transition-all duration-300 opacity-50 hover:opacity-100">
+                        <img src="https://placehold.co/150x40/0a0a0a/6b7280?text=Zenith" alt="Zenith Logo" class="h-8 transition-all duration-300 opacity-50 hover:opacity-100">
+                        <!-- Duplicate logos for seamless loop -->
+                        <img src="https://placehold.co/150x40/0a0a0a/6b7280?text=QuantumLeap" alt="QuantumLeap Logo" class="h-8 transition-all duration-300 opacity-50 hover:opacity-100">
+                        <img src="https://placehold.co/150x40/0a0a0a/6b7280?text=Stellar" alt="Stellar Logo" class="h-8 transition-all duration-300 opacity-50 hover:opacity-100">
+                        <img src="https://placehold.co/150x40/0a0a0a/6b7280?text=Apex" alt="Apex Logo" class="h-8 transition-all duration-300 opacity-50 hover:opacity-100">
+                        <img src="https://placehold.co/150x40/0a0a0a/6b7280?text=Fusion" alt="Fusion Logo" class="h-8 transition-all duration-300 opacity-50 hover:opacity-100">
+                        <img src="https://placehold.co/150x40/0a0a0a/6b7280?text=Momentum" alt="Momentum Logo" class="h-8 transition-all duration-300 opacity-50 hover:opacity-100">
+                        <img src="https://placehold.co/150x40/0a0a0a/6b7280?text=Zenith" alt="Zenith Logo" class="h-8 transition-all duration-300 opacity-50 hover:opacity-100">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Trust Us Section -->
+        <section id="why-trust-us" class="py-24 bg-[#101010]">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-4xl font-bold text-white tracking-tight scroll-reveal">Why Trust Developer X?</h2>
+                    <p class="mt-4 text-lg text-gray-400 font-inter scroll-reveal" style="transition-delay: 150ms;">
+                        Built for enterprise-grade security, performance, and reliability.
+                    </p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="feature-card scroll-reveal">
+                        <div class="mb-4 bg-green-500/10 text-green-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="lock" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Uncompromising Security</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Your code never leaves your environment. We offer on-premise and VPC deployment options for ultimate data privacy and compliance.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 100ms;">
+                        <div class="mb-4 bg-blue-500/10 text-blue-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="scale" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Enterprise Scalability</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Designed to handle the largest codebases and most complex workflows, scaling effortlessly with your organization's growth.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 200ms;">
+                        <div class="mb-4 bg-yellow-500/10 text-yellow-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="award" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Proven Reliability</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Backed by robust infrastructure and continuous monitoring to ensure maximum uptime and consistent performance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Video Section -->
+        <section id="demo-video" class="py-24 bg-black/20">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl font-bold text-white tracking-tight scroll-reveal">See Developer X in Action</h2>
+                <p class="mt-4 text-lg text-gray-400 font-inter max-w-2xl mx-auto scroll-reveal" style="transition-delay: 150ms;">
+                    Watch a quick demonstration of how Developer X automates complex tasks and streamlines your workflow.
+                </p>
+                <div class="mt-12 w-full max-w-4xl mx-auto rounded-xl overflow-hidden shadow-2xl border border-gray-700 scroll-reveal" style="transition-delay: 300ms;">
+                    <!-- Placeholder video with poster image -->
+                    <video controls class="w-full h-auto" poster="https://placehold.co/1280x720/1a1a1a/cccccc?text=Developer+X+Demo+Video">
+                        <source src="video/demo.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section (Bento Grid Layout) -->
+        <section id="features" class="py-24 bg-[#101010]">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-4xl font-bold text-white tracking-tight scroll-reveal">A Copilot That Does The Flying</h2>
+                    <p class="mt-4 text-lg text-gray-400 font-inter scroll-reveal" style="transition-delay: 150ms;">
+                        Go beyond simple code completion. Developer X is an autonomous agent that actively participates in your development process.
+                    </p>
+                </div>
+                <div class="mt-16 grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 auto-rows-[minmax(180px,auto)]">
+                    <!-- Feature Cards -->
+                    <div class="feature-card scroll-reveal lg:col-span-2" style="transition-delay: 0ms;">
+                        <div class="mb-4 bg-rose-500/10 text-rose-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="plug" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Flexible Model Integration</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Seamlessly connect to OpenAI, Anthropic, Google Gemini, OpenRouter, and local providers like LM Studio and Ollama.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 100ms;">
+                        <div class="mb-4 bg-cyan-500/10 text-cyan-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="zap" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Autonomous Workflow Execution</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Empower AI to autonomously create, edit, read files, map your codebase, and execute terminal commands as needed.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 200ms;">
+                        <div class="mb-4 bg-indigo-500/10 text-indigo-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="extension" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Extensible Protocol (MCP)</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Leverage the Model Context Protocol (MCP) to easily add custom capabilities and integrations to your AI agents.</p>
+                    </div>
+
+                    <div class="feature-card scroll-reveal" style="transition-delay: 300ms;">
+                        <div class="mb-4 bg-lime-500/10 text-lime-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="git-branch" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Multi-Agent Orchestration</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Deploy and manage multiple specialized AI agents working in parallel on different aspects of your project.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal lg:col-span-2" style="transition-delay: 400ms;">
+                        <div class="mb-4 bg-purple-500/10 text-purple-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="clipboard-list" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Intelligent Task Planning</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Agent automatically generates a <code class="bg-gray-700 px-1 rounded">todo.md</code> file to outline and track the steps required to complete your task.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 500ms;">
+                        <div class="mb-4 bg-green-500/10 text-green-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="file-sliders" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Configurable Agent Behavior</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Customize agent behavior and rules by simply specifying them in an <code class="bg-gray-700 px-1 rounded">AGENT.md</code> file, adapting to your team's workflow.</p>
+                    </div>
+
+                    <div class="feature-card scroll-reveal" style="transition-delay: 600ms;">
+                        <div class="mb-4 bg-orange-500/10 text-orange-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="bug-play" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">AI-Powered Debugging</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Automatically identifies, diagnoses, and suggests fixes for complex bugs, reducing debugging time significantly.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 700ms;">
+                        <div class="mb-4 bg-blue-500/10 text-blue-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="file-text" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Automated Test Generation</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Generates comprehensive unit, integration, and end-to-end tests to ensure robust code quality.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal lg:col-span-2" style="transition-delay: 800ms;">
+                        <div class="mb-4 bg-yellow-500/10 text-yellow-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="sparkles" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Intelligent Feature Development</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Accelerate new feature implementation with AI-driven code generation, refactoring, and integration assistance.</p>
+                    </div>
+
+                    <div class="feature-card scroll-reveal lg:col-span-2" style="transition-delay: 900ms;">
+                        <div class="mb-4 bg-red-500/10 text-red-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="refresh-cw" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Smart Code Refactoring</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Automatically analyzes and refactors code for improved readability, maintainability, and performance.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 1000ms;">
+                        <div class="mb-4 bg-teal-500/10 text-teal-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="users" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">AI Pair Programmer</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Collaborate with an AI that understands your context, suggests improvements, and writes code alongside you.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 1100ms;">
+                        <div class="mb-4 bg-pink-500/10 text-pink-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="puzzle" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Complex Problem Solver</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Leverage AI's analytical power to break down intricate challenges and generate innovative solutions.</p>
+                    </div>
+
+                    <div class="feature-card scroll-reveal" style="transition-delay: 1200ms;">
+                        <div class="mb-4 bg-purple-500/10 text-purple-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="layout-dashboard" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">End-to-End Application Creation</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Build entire applications from high-level descriptions, from backend logic to frontend UI.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal lg:col-span-3" style="transition-delay: 1300ms;">
+                        <div class="mb-4 bg-orange-500/10 text-orange-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="message-square-code" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Intuitive Command Interface</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Interact seamlessly using natural language and special commands like <code class="bg-gray-700 px-1 rounded">@path/to/file</code> for context, <code class="bg-gray-700 px-1 rounded">#https://link</code> to reference web pages, and <code class="bg-gray-700 px-1 rounded">help</code> for assistance. Simply type anything to get your task done!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-24 bg-black/20">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-4xl font-bold text-white tracking-tight scroll-reveal">What Our Developers Say</h2>
+                    <p class="mt-4 text-lg text-gray-400 font-inter scroll-reveal" style="transition-delay: 150ms;">
+                        Hear from the experts who are transforming their workflows with Developer X.
+                    </p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="feature-card scroll-reveal">
+                        <blockquote class="text-lg text-gray-300 italic">"Developer X has revolutionized our development process. The autonomous agents are a game-changer for productivity and code quality. Absolutely essential for modern teams!"</blockquote>
+                        <div class="mt-6 flex items-center">
+                            <!-- Placeholder image for avatar -->
+                            <img src="https://placehold.co/48x48/6a00ff/ffffff?text=JD" alt="Javier Diaz" class="rounded-full mr-4">
+                            <div>
+                                <p class="font-semibold text-white">Javier Diaz</p>
+                                <p class="text-sm text-gray-400">Lead Engineer, Quantum Innovations <span class="text-blue-400">(via X)</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 100ms;">
+                        <blockquote class="text-lg text-gray-300 italic">"The multi-provider support is incredible. We can leverage the best models for each task, and the local model integration is a huge win for security. This is the future of coding."</blockquote>
+                        <div class="mt-6 flex items-center">
+                            <!-- Placeholder image for avatar -->
+                            <img src="https://placehold.co/48x48/ff8a00/ffffff?text=SK" alt="Sarah Khan" class="rounded-full mr-4">
+                            <div>
+                                <p class="font-semibold text-white">Sarah Khan</p>
+                                <p class="text-sm text-gray-400">Senior AI Developer, NexusTech <span class="text-red-400">(on YouTube)</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 200ms;">
+                        <blockquote class="text-lg text-gray-300 italic">"Debugging used to be a nightmare. With Developer X, complex issues are identified and resolved in a fraction of the time. Our team's efficiency has skyrocketed. Highly recommend!"</blockquote>
+                        <div class="mt-6 flex items-center">
+                            <!-- Placeholder image for avatar -->
+                            <img src="https://placehold.co/48x48/00b894/ffffff?text=RW" alt="Rebecca Wu" class="rounded-full mr-4">
+                            <div>
+                                <p class="font-semibold text-white">Rebecca Wu</p>
+                                <p class="text-sm text-gray-400">DevOps Specialist, Innovate Solutions <span class="text-blue-400">(via LinkedIn)</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="py-24 bg-black/20">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-4xl font-bold text-white tracking-tight scroll-reveal">See The Agent In Action</h2>
+                    <p class="mt-4 text-lg text-gray-400 font-inter scroll-reveal" style="transition-delay: 150ms;">
+                        From a simple prompt to a complete pull request, here's how Developer X automates your workflow.
+                    </p>
+                </div>
+                <div id="workflow-container" class="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                    <!-- Step 1: Define Your Task -->
+                    <div class="scroll-reveal">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-gray-800 border border-gray-700 text-orange-400 h-10 w-10 rounded-full flex items-center justify-center mr-4">
+                                <span class="font-bold text-lg">1</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white">Define Your Task</h3>
+                        </div>
+                        <div id="workflow-step-1" class="workflow-terminal font-fira text-sm"></div>
+                    </div>
+                    <!-- Step 2: AI Executes the Plan -->
+                    <div class="scroll-reveal" style="transition-delay: 200ms;">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-gray-800 border border-gray-700 text-orange-400 h-10 w-10 rounded-full flex items-center justify-center mr-4">
+                                <span class="font-bold text-lg">2</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white">AI Executes the Plan</h3>
+                        </div>
+                        <div id="workflow-step-2" class="workflow-terminal font-fira text-sm"></div>
+                    </div>
+                    <!-- Step 3: Review the Result -->
+                    <div class="scroll-reveal" style="transition-delay: 400ms;">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-gray-800 border border-gray-700 text-orange-400 h-10 w-10 rounded-full flex items-center justify-center mr-4">
+                                <span class="font-bold text-lg">3</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white">Review the Result</h3>
+                        </div>
+                        <div id="workflow-step-3" class="workflow-terminal font-fira text-sm"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-24 bg-[#101010]">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto scroll-reveal">
+                    <h2 class="text-4xl font-bold text-white">Flexible Plans for Teams of All Sizes</h2>
+                    <p class="mt-4 text-lg text-gray-400 font-inter">
+                        Choose the plan that's right for your organization's needs.
+                    </p>
+                </div>
+                <div class="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Local Kit Plan Card -->
+                    <div class="feature-card scroll-reveal flex flex-col h-full">
+                        <h3 class="text-2xl font-bold text-white">Local Kit</h3>
+                        <p class="text-gray-400 mt-2">For individual local development.</p>
+                        <div class="mt-6">
+                            <span class="text-5xl font-extrabold text-white">$1.99</span>
+                            <span class="text-gray-400">/ onetime</span>
+                        </div>
+                        <ul class="space-y-4 mt-8 font-inter flex-grow text-gray-300">
+                            <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-3"></i>Supports LM Studio & Ollama</li>
+                            <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-3"></i>Basic agent features</li>
+                        </ul>
+                        <button class="mt-8 w-full text-center bg-gray-800 text-white font-bold py-3 rounded-lg hover:bg-gray-700 transition-colors premium-button purchase-button" data-plan="Local Kit">Purchase Local Kit</button>
+                    </div>
+                    <!-- Pro Kit Plan Card (Most Popular) -->
+                    <div class="feature-card scroll-reveal flex flex-col h-full" style="transition-delay: 200ms;">
+                        <!-- Adjusted positioning for the "Most Popular" badge -->
+                        <p class="absolute top-4 right-4 bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full z-10">Most Popular</p>
+                        <h3 class="text-2xl font-bold text-white">Pro Kit</h3>
+                        <p class="text-gray-400 mt-2">For professional developers & teams.</p>
+                        <div class="mt-6">
+                            <span class="text-5xl font-extrabold text-white">$2.99</span>
+                            <span class="text-gray-400">/ onetime</span>
+                        </div>
+                        <ul class="space-y-4 mt-8 font-inter flex-grow text-gray-300">
+                            <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-3"></i>Everything in Local Kit, plus:</li>
+                            <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-3"></i>OpenAI, Anthropic, Google Gemini, OpenRouter models</li>
+                            <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-3"></i>Ultra agentic features</li>
+                            <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-3"></i>To-do list integration</li>
+                            <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-3"></i>AGENT.md file support to customize behavior & add context</li>
+                            <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-3"></i>Multi-agentic workflow</li>
+                            <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-3"></i>Web scrapping support</li>
+                        </ul>
+                        <button class="mt-8 w-full text-center bg-orange-600 text-white font-bold py-3 rounded-lg hover:bg-orange-700 transition-colors premium-button purchase-button" data-plan="Pro Kit">Purchase Pro Kit</button>
+                    </div>
+                    <!-- Enterprise Plan Card -->
+                    <div class="feature-card scroll-reveal flex flex-col h-full" style="transition-delay: 400ms;">
+                        <h3 class="text-2xl font-bold text-white">Enterprise</h3>
+                        <p class="text-gray-400 mt-2">For security-conscious organizations.</p>
+                        <p class="text-3xl font-extrabold mt-6 text-white">Custom</p>
+                        <p class="text-gray-500">Let's talk</p>
+                        <ul class="space-y-4 mt-8 font-inter flex-grow text-gray-300">
+                            <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-3"></i>Everything in Pro, plus:</li>
+                            <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-3"></i>On-premise / VPC deployment</li>
+                            <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-3"></i>SSO/SAML integration</li>
+                            <li class="flex items-center"><i data-lucide="check" class="h-5 w-5 text-green-500 mr-3"></i>Dedicated support & SLA</li>
+                        </ul>
+                        <button class="mt-8 w-full text-center bg-gray-200 text-gray-900 font-bold py-3 rounded-lg hover:bg-white transition-colors premium-button purchase-button" data-plan="Enterprise">Contact Sales</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Developer X Section -->
+        <section id="about" class="py-24 bg-[#101010]">
+            <div class="container mx-auto px-6 text-center max-w-3xl">
+                <h2 class="text-4xl font-bold text-white tracking-tight scroll-reveal">About Developer X</h2>
+                <p class="mt-4 text-lg text-gray-400 font-inter scroll-reveal" style="transition-delay: 150ms;">
+                    Our mission is to empower developers and enterprises with the most advanced autonomous AI, transforming the way software is built. We believe in a future where AI acts as a true collaborator, accelerating innovation and ensuring unparalleled quality and security.
+                </p>
+                <p class="mt-4 text-lg text-gray-400 font-inter scroll-reveal" style="transition-delay: 250ms;">
+                    Developer X is built on principles of privacy, extensibility, and seamless integration, designed to fit perfectly into your existing development ecosystem.
+                </p>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section id="contact" class="py-24 bg-[#101010]">
+            <div class="container mx-auto px-6 text-center">
+                <!-- Placeholder logo for CTA -->
+                <img src="https://placehold.co/150x150/0A0A0A/F97316?text=DEV+X" alt="Developer X Logo" class="mx-auto mb-8 w-36 h-36 object-contain scroll-reveal" style="transition-delay: 0ms;">
+                <h2 class="text-4xl font-bold text-white scroll-reveal" style="transition-delay: 100ms;">Ready to 10x Your Workflow?</h2>
+                <p class="mt-4 text-lg text-gray-400 max-w-2xl mx-auto scroll-reveal" style="transition-delay: 200ms;">
+                    Install the CLI and get started for free. See how an autonomous AI agent can change the way you code.
+                </p>
+                <div class="mt-8 scroll-reveal" style="transition-delay: 300ms;">
+                     <a href="#" class="bg-orange-600 text-white font-bold px-8 py-4 rounded-lg premium-button text-lg inline-flex items-center space-x-2 shadow-lg shadow-orange-600/30">
+                        <span>Get Started - It's Free</span>
+                        <i data-lucide="arrow-right" class="h-5 w-5"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white">
+        <div class="container mx-auto px-6 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <!-- Developer X Logo SVG in Footer -->
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-orange-600">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32ZM13.8693 22.1307L22.1307 13.8693L20.2621 12L12 20.2621L13.8693 22.1307ZM9.86928 18.1307L18.1307 9.86928L16.2621 8L8 16.2621L9.86928 18.1307Z" fill="currentColor"/>
+                        </svg>
+                        <span class="text-2xl font-bold text-white">Developer X</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Your autonomous AI coding partner for enterprise.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">Product</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#features" class="hover:text-orange-400 transition-colors">Features</a></li>
+                        <li><a href="#pricing" class="hover:text-orange-400 transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Integrations</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Roadmap</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">Company</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#about" class="hover:text-orange-400 transition-colors">About Us</a></li>
+                        <li><a href="#contact" class="hover:text-orange-400 transition-colors">Contact Sales</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-white mb-4">Legal</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Security</a></li>
+                        <li><a href="#" class="hover:text-orange-400 transition-colors">Cookies Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-16 pt-8 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm">&copy; 2024 Developer X. All rights reserved.</p>
+                <div class="flex space-x-4 mt-4 sm:mt-0">
+                    <a href="#" class="text-gray-500 hover:text-white"><i data-lucide="twitter" class="h-5 w-5"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-white"><i data-lucide="github" class="h-5 w-5"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-white"><i data-lucide="linkedin" class="h-5 w-5"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Purchase Modal -->
+    <div id="purchase-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" id="close-modal-button">
+                <i data-lucide="x" class="h-6 w-6"></i>
+            </button>
+            <h3 class="text-3xl font-bold text-white mb-4">Contact Us to Purchase</h3>
+            <p class="text-gray-300 mb-6 font-inter">
+                Thank you for your interest in <span id="modal-plan-name" class="font-semibold text-orange-400">Developer X</span>!
+                To proceed with your purchase or to get more details about the <span id="modal-plan-name-2" class="font-semibold text-orange-400">plan</span>,
+                please reach out to our sales team via email:
+            </p>
+            <div class="bg-gray-800 p-4 rounded-lg flex items-center justify-between">
+                <span class="text-lg text-green-400 font-fira" id="contact-email">genai.foundery@gmail.com</span>
+                <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2" id="copy-email-button">
+                    <i data-lucide="copy" class="h-4 w-4"></i>
+                    <span>Copy</span>
+                </button>
+            </div>
+            <p class="text-gray-400 text-sm mt-4">
+                Click the email address or the "Copy" button to easily get in touch.
+            </p>
+        </div>
+    </div>
+
+
+    <script>
+        // Ensure Lucide Icons are created after the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+
+        // --- INTERACTIVITY SCRIPTS ---
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // FAQ Accordion (No FAQ section in current HTML, but keeping the logic for future use)
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                answer.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+
+        // Scroll Reveal Animations
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+        document.querySelectorAll('.scroll-reveal').forEach(el => scrollObserver.observe(el));
+        
+        // Animated Terminal in Hero Section
+        const terminalText = document.getElementById('terminal-text');
+        if (terminalText) {
+            const commands = [
+                'devx run "Refactor user auth to use JWT"',
+                'devx run "Add unit tests for the payment gateway"',
+                'devx run "Fix the caching bug on the main dashboard"',
+                'devx run "Create a new endpoint for user profiles"'
+            ];
+            let commandIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+
+            function type() {
+                const currentCommand = commands[commandIndex];
+                if (isDeleting) {
+                    terminalText.textContent = currentCommand.substring(0, charIndex - 1);
+                    charIndex--;
+                    if (charIndex === 0) {
+                        isDeleting = false;
+                        commandIndex = (commandIndex + 1) % commands.length;
+                    }
+                } else {
+                    terminalText.textContent = currentCommand.substring(0, charIndex + 1);
+                    charIndex++;
+                    if (charIndex === currentCommand.length) {
+                        isDeleting = true;
+                        setTimeout(type, 2000); // Pause before deleting
+                        return;
+                    }
+                }
+                setTimeout(type, isDeleting ? 50 : 100); // Typing speed
+            }
+            type();
+        }
+
+        // Enhanced Card Hover Effect (for feature cards)
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--spotlight-x', `${x}px`);
+                card.style.setProperty('--spotlight-y', `${y}px`);
+                // Calculate rotation based on mouse position relative to card center
+                card.style.setProperty('--rotate-x', `${(y - rect.height / 2) / rect.height * -10}deg`);
+                card.style.setProperty('--rotate-y', `${(x - rect.width / 2) / rect.width * 10}deg`);
+            });
+            card.addEventListener('mouseleave', () => {
+                // Reset rotation on mouse leave
+                card.style.setProperty('--rotate-x', '0deg');
+                card.style.setProperty('--rotate-y', '0deg');
+            });
+        });
+
+        // Animated Workflow Terminal for "How It Works" section
+        const workflowLog = {
+            step1: [
+                { type: 'info', text: '🚀 Welcome to Developer-X!' },
+                { type: 'info', text: '========================================' },
+                { type: 'info', text: '🔑 API key loaded from environment.' },
+                { type: 'info', text: '✅ Configuration: gemini / gemini-2.5-flash' },
+                { type: 'info', text: '💡 Tip: Use @filename to include file contents!' },
+                { type: 'user', text: '🔷 You: @index.html Improve the visuals of my app' },
+            ],
+            step2: [
+                { type: 'ai', text: '🤖 AI: I\'ll update the visuals of `index.html`. I\'ll start by reading the current file.' },
+                { type: 'tool', text: '✅ Tool executed: read_file' },
+                { type: 'ai', text: '🤖 AI: I see the code. I\'ll add proper styling, more sections, and a logo. I\'ll make a todo.md to track progress.' },
+                { type: 'tool', text: '✅ Tool executed: write_file (todo.md)' },
+                { type: 'ai', text: '🤖 AI: I\'ll proceed with the improvements now.' },
+                { type: 'tool', text: '✅ Tool executed: edit_file (index.html)' },
+                { type: 'ai', text: '🤖 AI: I\'ll update the styles now.' },
+                { type: 'tool', text: '✅ Tool executed: edit_file (styles.css)' },
+            ],
+            step3: [
+                { type: 'ai', text: '🤖 AI: I\'ll open the html file now for you to review.' },
+                { type: 'tool', text: '✅ Tool executed: run_command `open index.html`' },
+                { type: 'ai', text: '🤖 AI: Great! Everything is perfectly done! Feel free to ask if something didn\'t meet your expectations.' },
+            ]
+        };
+
+        // Helper function to create a log line element
+        function createLogLine(line) {
+            const p = document.createElement('p');
+            p.className = 'line';
+            let colorClass = 'text-gray-400';
+            if (line.type === 'user') colorClass = 'text-cyan-400';
+            if (line.type === 'ai') colorClass = 'text-white';
+            if (line.type === 'tool') colorClass = 'text-green-400';
+            p.classList.add(colorClass);
+            p.textContent = line.text;
+            return p;
+        }
+
+        // Function to animate text in a terminal-like fashion
+        function animateTerminal(container, lines) {
+            let delay = 0;
+            // Clear existing content to allow re-animation if needed
+            container.innerHTML = ''; 
+            lines.forEach(line => {
+                const lineEl = createLogLine(line);
+                container.appendChild(lineEl);
+                setTimeout(() => {
+                    lineEl.style.opacity = '1';
+                    // Scroll to bottom as new lines appear
+                    container.scrollTop = container.scrollHeight;
+                }, delay);
+                delay += 200; // Stagger the appearance of each line
+            });
+        }
+
+        // Observer to trigger workflow terminal animations when in view
+        const workflowObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const step1Container = document.getElementById('workflow-step-1');
+                    const step2Container = document.getElementById('workflow-step-2');
+                    const step3Container = document.getElementById('workflow-step-3');
+                    
+                    // Animate only once per load/visibility
+                    if (step1Container && step1Container.childElementCount === 0) { 
+                        animateTerminal(step1Container, workflowLog.step1);
+                        setTimeout(() => animateTerminal(step2Container, workflowLog.step2), 500);
+                        setTimeout(() => animateTerminal(step3Container, workflowLog.step3), 1000);
+                    }
+                    // workflowObserver.unobserve(entry.target); // Optional: stop observing after animation
+                }
+            });
+        }, { threshold: 0.5 }); // Trigger when 50% of the container is visible
+        
+        const workflowContainer = document.getElementById('workflow-container');
+        if(workflowContainer) {
+            workflowObserver.observe(workflowContainer);
+        }
+
+        // Particle Canvas JavaScript for background animation
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const maxParticles = 100;
+        const particleColor = 'rgba(255, 255, 255, 0.1)';
+        const lineColor = 'rgba(255, 255, 255, 0.05)';
+        const lineDistance = 120;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            // Set canvas height to the document's scrollable height to cover all content
+            canvas.height = document.body.scrollHeight; 
+        }
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.5 - 0.25; // Random speed for X direction
+                this.speedY = Math.random() * 0.5 - 0.25; // Random speed for Y direction
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Bounce particles off canvas edges
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.fillStyle = particleColor;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < maxParticles; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                particles.push(new Particle(x, y));
+            }
+        }
+
+        function connectParticles() {
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a; b < particles.length; b++) {
+                    const dist = Math.sqrt(
+                        (particles[a].x - particles[b].x)**2 +
+                        (particles[a].y - particles[b].y)**2
+                    );
+                    // Draw lines between particles that are close enough
+                    if (dist < lineDistance) {
+                        ctx.strokeStyle = lineColor;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas for next frame
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            connectParticles();
+            requestAnimationFrame(animateParticles); // Loop animation
+        }
+
+        // Event listeners for canvas resizing and initial load
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles(); // Re-initialize particles on resize to distribute them correctly
+        });
+        window.addEventListener('load', () => {
+            resizeCanvas();
+            initParticles();
+            animateParticles();
+        });
+
+        // Hero Blob Interaction (Parallax effect on mouse move)
+        const heroSection = document.getElementById('hero-section');
+        const heroBlob = document.querySelector('.hero-blob');
+
+        if (heroSection && heroBlob) {
+            heroSection.addEventListener('mousemove', (e) => {
+                const rect = heroSection.getBoundingClientRect();
+                // Calculate mouse position relative to the hero section center
+                const mouseX = e.clientX - rect.left - rect.width / 2;
+                const mouseY = e.clientY - rect.top - rect.height / 2;
+
+                // Apply a parallax effect to the blob
+                const parallaxFactor = 0.05; // Adjust this for more or less movement
+                heroBlob.style.transform = `translate(calc(-50% + ${mouseX * parallaxFactor}px), calc(-50% + ${mouseY * parallaxFactor}px))`;
+            });
+
+            // Reset blob position when mouse leaves the hero section
+            heroBlob.style.transition = 'transform 0.5s ease-out'; // Smooth transition for reset
+            heroSection.addEventListener('mouseleave', () => {
+                heroBlob.style.transform = 'translate(-50%, -50%)';
+            });
+        }
+
+        // Modal Logic
+        const purchaseButtons = document.querySelectorAll('.purchase-button');
+        const purchaseModal = document.getElementById('purchase-modal');
+        const closeModalButton = document.getElementById('close-modal-button');
+        const modalPlanName = document.getElementById('modal-plan-name');
+        const modalPlanName2 = document.getElementById('modal-plan-name-2');
+        const contactEmailSpan = document.getElementById('contact-email');
+        const copyEmailButton = document.getElementById('copy-email-button');
+
+        purchaseButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const planName = button.dataset.plan;
+                modalPlanName.textContent = planName;
+                modalPlanName2.textContent = planName;
+                purchaseModal.classList.add('open');
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            });
+        });
+
+        closeModalButton.addEventListener('click', () => {
+            purchaseModal.classList.remove('open');
+            document.body.style.overflow = ''; // Restore scrolling
+        });
+
+        // Close modal when clicking outside the content
+        purchaseModal.addEventListener('click', (e) => {
+            if (e.target === purchaseModal) {
+                purchaseModal.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Copy email to clipboard
+        copyEmailButton.addEventListener('click', () => {
+            const email = contactEmailSpan.textContent;
+            const textarea = document.createElement('textarea');
+            textarea.value = email;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy'); // Fallback for navigator.clipboard.writeText
+            document.body.removeChild(textarea);
+            
+            // Provide visual feedback
+            const originalText = copyEmailButton.querySelector('span').textContent;
+            copyEmailButton.querySelector('span').textContent = 'Copied!';
+            setTimeout(() => {
+                copyEmailButton.querySelector('span').textContent = originalText;
+            }, 2000);
+        });
+
+        // Make the email address clickable to open mail client
+        contactEmailSpan.addEventListener('click', () => {
+            window.location.href = `mailto:${contactEmailSpan.textContent}`;
+        });
+
+    </script>
+</body>
+</html>
