@@ -337,6 +337,7 @@
                 <a href="#pricing" class="text-gray-300 hover:text-orange-400 transition-all duration-200 px-4 py-2 rounded-md hover:bg-white/10">Pricing</a>
                 <a href="#testimonials" class="text-gray-300 hover:text-orange-400 transition-all duration-200 px-4 py-2 rounded-md hover:bg-white/10">Testimonials</a>
                 <a href="docs.html" class="text-gray-300 hover:text-orange-400 transition-all duration-200 px-4 py-2 rounded-md hover:bg-white/10">Documentation</a>
+                <a href="changelog.html" class="text-gray-300 hover:text-orange-400 transition-all duration-200 px-4 py-2 rounded-md hover:bg-white/10">Changelog</a>
                 <a href="#faq" class="text-gray-300 hover:text-orange-400 transition-all duration-200 px-4 py-2 rounded-md hover:bg-white/10">FAQ</a>
             </nav>
             <!-- Desktop Auth/CTA Buttons -->
@@ -356,6 +357,7 @@
                 <a href="#pricing" class="text-gray-300 hover:text-orange-400 transition-colors block">Pricing</a>
                 <a href="#testimonials" class="text-gray-300 hover:text-orange-400 transition-colors block">Testimonials</a>
                 <a href="docs.html" class="text-gray-300 hover:text-orange-400 transition-colors block">Documentation</a>
+                <a href="changelog.html" class="text-gray-300 hover:text-orange-400 transition-colors block">Changelog</a>
                 <a href="#faq" class="text-gray-300 hover:text-orange-400 transition-colors block">FAQ</a>
                 <hr class="border-gray-700"/>
                 <!-- Removed the "Login" button from mobile menu -->
@@ -372,6 +374,9 @@
 
             <div class="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
                 <div class="text-center lg:text-left">
+                    <div class="inline-block bg-gray-800/50 border border-gray-700 rounded-full px-4 py-2 mb-4 scroll-reveal">
+                        <p class="text-sm text-orange-400 font-semibold">v2 coming soon!</p>
+                    </div>
                     <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight tracking-tight scroll-reveal">
                         Your Code's New <span class="text-orange-400">Collaborator</span>.
                     </h1>
@@ -429,222 +434,57 @@
             </div>
         </section>
 
-        <!-- Why Trust Us Section -->
-        <section id="why-trust-us" class="py-24 bg-[#101010]">
-            <div class="container mx-auto px-6">
-                <div class="text-center max-w-3xl mx-auto">
-                    <h2 class="text-4xl font-bold text-white tracking-tight scroll-reveal">Why Trust Developer X?</h2>
-                    <p class="mt-4 text-lg text-gray-400 font-inter scroll-reveal" style="transition-delay: 150ms;">
-                        Built for enterprise-grade security, performance, and reliability.
-                    </p>
-                </div>
-                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="feature-card scroll-reveal">
-                        <div class="mb-4 bg-green-500/10 text-green-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="lock" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Uncompromising Security</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Your code never leaves your environment. We offer on-premise and VPC deployment options for ultimate data privacy and compliance.</p>
-                    </div>
-                    <div class="feature-card scroll-reveal" style="transition-delay: 100ms;">
-                        <div class="mb-4 bg-blue-500/10 text-blue-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="scale" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Enterprise Scalability</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Designed to handle the largest codebases and most complex workflows, scaling effortlessly with your organization's growth.</p>
-                    </div>
-                    <div class="feature-card scroll-reveal" style="transition-delay: 200ms;">
-                        <div class="mb-4 bg-yellow-500/10 text-yellow-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="award" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Proven Reliability</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Backed by robust infrastructure and continuous monitoring to ensure maximum uptime and consistent performance.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Demo Video Section -->
-        <section id="demo-video" class="py-24 bg-black/20">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-4xl font-bold text-white tracking-tight scroll-reveal">See Developer X in Action</h2>
-                <p class="mt-4 text-lg text-gray-400 font-inter max-w-2xl mx-auto scroll-reveal" style="transition-delay: 150ms;">
-                    Take a look at a video from our community to see how they use developer X
-                </p>
-                <div class="mt-12 w-full max-w-4xl mx-auto rounded-xl overflow-hidden shadow-2xl border border-gray-700 scroll-reveal" style="transition-delay: 300ms;">
-                    <!-- YouTube Embed -->
-                    <div class="relative" style="padding-bottom: 56.25%;"> <!-- 16:9 Aspect Ratio -->
-                        <iframe
-                            class="absolute top-0 left-0 w-full h-full rounded-xl"
-                            src="https://www.youtube.com/embed/hMbFAJjUBZM"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen
-                        ></iframe>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Features Section (Bento Grid Layout) -->
+        <!-- New High-Level Features Section -->
         <section id="features" class="py-24 bg-[#101010]">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto">
-                    <h2 class="text-4xl font-bold text-white tracking-tight scroll-reveal">A Copilot That Does The Flying</h2>
+                    <h2 class="text-4xl font-bold text-white tracking-tight scroll-reveal">Build software faster</h2>
                     <p class="mt-4 text-lg text-gray-400 font-inter scroll-reveal" style="transition-delay: 150ms;">
-                        Go beyond simple code completion. Developer X is an autonomous agent that actively participates in your development process.
-                    </p>
-                </div>
-                <div class="mt-16 grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 auto-rows-[minmax(180px,auto)]">
-                    <!-- Feature Cards -->
-                    <div class="feature-card scroll-reveal lg:col-span-2" style="transition-delay: 0ms;">
-                        <div class="mb-4 bg-rose-500/10 text-rose-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="plug" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Flexible Model Integration</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Seamlessly connect to OpenAI, Anthropic, Google Gemini, OpenRouter, and local providers like LM Studio and Ollama.</p>
-                    </div>
-                    <div class="feature-card scroll-reveal" style="transition-delay: 100ms;">
-                        <div class="mb-4 bg-cyan-500/10 text-cyan-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="zap" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Autonomous Workflow Execution</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Empower AI to autonomously create, edit, read files, map your codebase, and execute terminal commands as needed.</p>
-                    </div>
-                    <div class="feature-card scroll-reveal" style="transition-delay: 200ms;">
-                        <div class="mb-4 bg-indigo-500/10 text-indigo-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="extension" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Extensible Protocol (MCP)</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Leverage the Model Context Protocol (MCP) to easily add custom capabilities and integrations to your AI agents.</p>
-                    </div>
-
-                    <div class="feature-card scroll-reveal" style="transition-delay: 300ms;">
-                        <div class="mb-4 bg-lime-500/10 text-lime-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="git-branch" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Multi-Agent Orchestration</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Deploy and manage multiple specialized AI agents working in parallel on different aspects of your project.</p>
-                    </div>
-                    <div class="feature-card scroll-reveal lg:col-span-2" style="transition-delay: 400ms;">
-                        <div class="mb-4 bg-purple-500/10 text-purple-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="clipboard-list" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Intelligent Task Planning</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Agent automatically generates a <code class="bg-gray-700 px-1 rounded">todo.md</code> file to outline and track the steps required to complete your task.</p>
-                    </div>
-                    <div class="feature-card scroll-reveal" style="transition-delay: 500ms;">
-                        <div class="mb-4 bg-green-500/10 text-green-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="file-sliders" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Configurable Agent Behavior</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Customize agent behavior and rules by simply specifying them in an <code class="bg-gray-700 px-1 rounded">AGENT.md</code> file, adapting to your team's workflow.</p>
-                    </div>
-
-                    <div class="feature-card scroll-reveal" style="transition-delay: 600ms;">
-                        <div class="mb-4 bg-orange-500/10 text-orange-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="bug-play" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">AI-Powered Debugging</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Automatically identifies, diagnoses, and suggests fixes for complex bugs, reducing debugging time significantly.</p>
-                    </div>
-                    <div class="feature-card scroll-reveal" style="transition-delay: 700ms;">
-                        <div class="mb-4 bg-blue-500/10 text-blue-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="file-text" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Automated Test Generation</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Generates comprehensive unit, integration, and end-to-end tests to ensure robust code quality.</p>
-                    </div>
-                    <div class="feature-card scroll-reveal lg:col-span-2" style="transition-delay: 800ms;">
-                        <div class="mb-4 bg-yellow-500/10 text-yellow-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="sparkles" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Intelligent Feature Development</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Accelerate new feature implementation with AI-driven code generation, refactoring, and integration assistance.</p>
-                    </div>
-
-                    <div class="feature-card scroll-reveal lg:col-span-2" style="transition-delay: 900ms;">
-                        <div class="mb-4 bg-red-500/10 text-red-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="refresh-cw" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Smart Code Refactoring</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Automatically analyzes and refactors code for improved readability, maintainability, and performance.</p>
-                    </div>
-                    <div class="feature-card scroll-reveal" style="transition-delay: 1000ms;">
-                        <div class="mb-4 bg-teal-500/10 text-teal-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="users" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">AI Pair Programmer</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Collaborate with an AI that understands your context, suggests improvements, and writes code alongside you.</p>
-                    </div>
-                    <div class="feature-card scroll-reveal" style="transition-delay: 1100ms;">
-                        <div class="mb-4 bg-pink-500/10 text-pink-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="puzzle" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Complex Problem Solver</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Leverage AI's analytical power to break down intricate challenges and generate innovative solutions.</p>
-                    </div>
-
-                    <div class="feature-card scroll-reveal" style="transition-delay: 1200ms;">
-                        <div class="mb-4 bg-purple-500/10 text-purple-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="layout-dashboard" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">End-to-End Application Creation</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Build entire applications from high-level descriptions, from backend logic to frontend UI.</p>
-                    </div>
-                    <div class="feature-card scroll-reveal lg:col-span-3" style="transition-delay: 1300ms;">
-                        <div class="mb-4 bg-orange-500/10 text-orange-400 h-12 w-12 rounded-lg flex items-center justify-center">
-                            <i data-lucide="message-square-code" class="h-6 w-6"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white">Intuitive Command Interface</h3>
-                        <p class="mt-2 text-gray-400 font-inter">Interact seamlessly using natural language and special commands like <code class="bg-gray-700 px-1 rounded">@path/to/file</code> for context, <code class="bg-gray-700 px-1 rounded">#https://link</code> to reference web pages, and <code class="bg-gray-700 px-1 rounded">help</code> for assistance. Simply type anything to get your task done!</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Testimonials Section -->
-        <section id="testimonials" class="py-24 bg-black/20">
-            <div class="container mx-auto px-6">
-                <div class="text-center max-w-3xl mx-auto">
-                    <h2 class="text-4xl font-bold text-white tracking-tight scroll-reveal">What Our Developers Say</h2>
-                    <p class="mt-4 text-lg text-gray-400 font-inter scroll-reveal" style="transition-delay: 150ms;">
-                        Hear from the experts who are transforming their workflows with Developer X.
+                        Intelligent, fast, and familiar, Developer X is the best way to code with AI.
                     </p>
                 </div>
                 <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="feature-card scroll-reveal">
-                        <blockquote class="text-lg text-gray-300 italic">"Developer X has revolutionized our development process. The autonomous agents are a game-changer for productivity and code quality. Absolutely essential for modern teams!"</blockquote>
-                        <div class="mt-6 flex items-center">
-                            <!-- Placeholder image for avatar -->
-                            <img src="https://placehold.co/48x48/6a00ff/ffffff?text=JD" alt="Javier Diaz" class="rounded-full mr-4">
-                            <div>
-                                <p class="font-semibold text-white">Javier Diaz</p>
-                                <p class="text-sm text-gray-400">Lead Engineer, Quantum Innovations <span class="text-blue-400">(via X)</span></p>
-                            </div>
+                        <div class="mb-4 bg-purple-500/10 text-purple-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="brain-circuit" class="h-6 w-6"></i>
                         </div>
+                        <h3 class="text-xl font-bold text-white">Frontier Intelligence</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Powered by a mix of purpose-built and frontier models, Developer X is smart and fast.</p>
                     </div>
                     <div class="feature-card scroll-reveal" style="transition-delay: 100ms;">
-                        <blockquote class="text-lg text-gray-300 italic">"The multi-provider support is incredible. We can leverage the best models for each task, and the local model integration is a huge win for security. This is the future of coding."</blockquote>
-                        <div class="mt-6 flex items-center">
-                            <!-- Placeholder image for avatar -->
-                            <img src="https://placehold.co/48x48/ff8a00/ffffff?text=SK" alt="Sarah Khan" class="rounded-full mr-4">
-                            <div>
-                                <p class="font-semibold text-white">Sarah Khan</p>
-                                <p class="text-sm text-gray-400">Senior AI Developer, NexusTech <span class="text-red-400">(on YouTube)</span></p>
-                            </div>
+                        <div class="mb-4 bg-blue-500/10 text-blue-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="file-search" class="h-6 w-6"></i>
                         </div>
+                        <h3 class="text-xl font-bold text-white">Knows Your Codebase</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Using custom retrieval models, Developer X can understand a codebase. Get answers or refer to files and docs.</p>
                     </div>
                     <div class="feature-card scroll-reveal" style="transition-delay: 200ms;">
-                        <blockquote class="text-lg text-gray-300 italic">"Debugging used to be a nightmare. With Developer X, complex issues are identified and resolved in a fraction of the time. Our team's efficiency has skyrocketed. Highly recommend!"</blockquote>
-                        <div class="mt-6 flex items-center">
-                            <!-- Placeholder image for avatar -->
-                            <img src="https://placehold.co/48x48/00b894/ffffff?text=RW" alt="Rebecca Wu" class="rounded-full mr-4">
-                            <div>
-                                <p class="font-semibold text-white">Rebecca Wu</p>
-                                <p class="text-sm text-gray-400">DevOps Specialist, Innovate Solutions <span class="text-blue-400">(via LinkedIn)</span></p>
-                            </div>
+                        <div class="mb-4 bg-green-500/10 text-green-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="edit" class="h-6 w-6"></i>
                         </div>
+                        <h3 class="text-xl font-bold text-white">Edit in Natural Language</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Write code using instructions. Update entire classes or functions with a simple prompt.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 0ms;">
+                        <div class="mb-4 bg-orange-500/10 text-orange-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="terminal-square" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Runs Commands</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Developer X can automatically write and run terminal commands. You’ll be asked to confirm all commands by default.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 100ms;">
+                        <div class="mb-4 bg-red-500/10 text-red-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="bug-off" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Debugging Assistant</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Developer X can detect lint errors automatically and apply fixes, reducing the need for manual debugging.</p>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 200ms;">
+                        <div class="mb-4 bg-cyan-500/10 text-cyan-400 h-12 w-12 rounded-lg flex items-center justify-center">
+                            <i data-lucide="at-sign" class="h-6 w-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Reference Your Code</h3>
+                        <p class="mt-2 text-gray-400 font-inter">Reference code with @ symbols to be used as context for the AI, ensuring relevant and accurate responses.</p>
                     </div>
                 </div>
             </div>
@@ -693,9 +533,56 @@
                 </div>
             </div>
         </section>
+        
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-24 bg-[#101010]">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-4xl font-bold text-white tracking-tight scroll-reveal">What Our Developers Say</h2>
+                    <p class="mt-4 text-lg text-gray-400 font-inter scroll-reveal" style="transition-delay: 150ms;">
+                        Hear from the experts who are transforming their workflows with Developer X.
+                    </p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="feature-card scroll-reveal">
+                        <blockquote class="text-lg text-gray-300 italic">"Developer X has revolutionized our development process. The autonomous agents are a game-changer for productivity and code quality. Absolutely essential for modern teams!"</blockquote>
+                        <div class="mt-6 flex items-center">
+                            <!-- Placeholder image for avatar -->
+                            <img src="https://placehold.co/48x48/6a00ff/ffffff?text=JD" alt="Javier Diaz" class="rounded-full mr-4">
+                            <div>
+                                <p class="font-semibold text-white">Javier Diaz</p>
+                                <p class="text-sm text-gray-400">Lead Engineer, Quantum Innovations <span class="text-blue-400">(via X)</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 100ms;">
+                        <blockquote class="text-lg text-gray-300 italic">"The multi-provider support is incredible. We can leverage the best models for each task, and the local model integration is a huge win for security. This is the future of coding."</blockquote>
+                        <div class="mt-6 flex items-center">
+                            <!-- Placeholder image for avatar -->
+                            <img src="https://placehold.co/48x48/ff8a00/ffffff?text=SK" alt="Sarah Khan" class="rounded-full mr-4">
+                            <div>
+                                <p class="font-semibold text-white">Sarah Khan</p>
+                                <p class="text-sm text-gray-400">Senior AI Developer, NexusTech <span class="text-red-400">(on YouTube)</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-card scroll-reveal" style="transition-delay: 200ms;">
+                        <blockquote class="text-lg text-gray-300 italic">"Debugging used to be a nightmare. With Developer X, complex issues are identified and resolved in a fraction of the time. Our team's efficiency has skyrocketed. Highly recommend!"</blockquote>
+                        <div class="mt-6 flex items-center">
+                            <!-- Placeholder image for avatar -->
+                            <img src="https://placehold.co/48x48/00b894/ffffff?text=RW" alt="Rebecca Wu" class="rounded-full mr-4">
+                            <div>
+                                <p class="font-semibold text-white">Rebecca Wu</p>
+                                <p class="text-sm text-gray-400">DevOps Specialist, Innovate Solutions <span class="text-blue-400">(via LinkedIn)</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Pricing Section -->
-        <section id="pricing" class="py-24 bg-[#101010]">
+        <section id="pricing" class="py-24 bg-black/20">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto scroll-reveal">
                     <h2 class="text-4xl font-bold text-white">Flexible Plans for Teams of All Sizes</h2>
@@ -816,6 +703,7 @@
                     <h4 class="font-bold text-white mb-4">Resources</h4>
                     <ul class="space-y-2 text-gray-400">
                         <li><a href="docs.html" class="hover:text-orange-400 transition-colors">Documentation</a></li>
+                        <li><a href="changelog.html" class="hover:text-orange-400 transition-colors">Changelog</a></li>
                         <li><a href="#faq" class="hover:text-orange-400 transition-colors">FAQ</a></li>
                         <li><a href="#" class="hover:text-orange-400 transition-colors">Support</a></li>
                     </ul>
